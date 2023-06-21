@@ -8,7 +8,6 @@
     "dev": "nodemon",
     "test": "nodemon --config ./spec/nodemon.json",
     "test:no-reloading": "npx ts-node --files -r tsconfig-paths/register ./spec",
-    "prepare": "husky install",
     "postinstall": "husky install",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
@@ -76,10 +75,8 @@
   },
   "lint-staged": {
     "*.(js|ts)": [
-      "npm run lint",
-      "npm run format",
-      "yarn run lint",
-      "yarn run format",
+      "yarn run lint:fix",
+      "npm run lint:fix",
       "git add ."
     ]
 }
