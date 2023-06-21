@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import bcrypt from 'bcrypt';
-
 
 // **** Variables **** //
 
 const SALT_ROUNDS = 12;
-
 
 // **** Functions **** //
 
@@ -28,7 +29,6 @@ function hashSync(pwd: string): string {
 function compare(pwd: string, hash: string): Promise<boolean> {
   return bcrypt.compare(pwd, hash);
 }
-
 
 // **** Export Default **** //
 

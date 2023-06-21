@@ -4,28 +4,26 @@
  * Setup express server.
  */
 
-import cookieParser from "cookie-parser";
-import morgan from "morgan";
-import path from "path";
-import helmet from "helmet";
-import express, { Request, Response, NextFunction } from "express";
-import logger from "jet-logger";
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import path from 'path';
+import helmet from 'helmet';
+import express, { Request, Response, NextFunction } from 'express';
+import logger from 'jet-logger';
 
-import "express-async-errors";
+import 'express-async-errors';
 
-import BaseRouter from "@src/routes/api";
-import Paths from "@src/routes/constants/Paths";
+import BaseRouter from '@src/routes/api';
+import Paths from '@src/routes/constants/Paths';
 
-import EnvVars from "@src/constants/EnvVars";
-import HttpStatusCodes from "@src/constants/HttpStatusCodes";
+import EnvVars from '@src/constants/EnvVars';
+import HttpStatusCodes from '@src/constants/HttpStatusCodes';
 
-import { NodeEnvs } from "@src/constants/misc";
-import { RouteError } from "@src/other/classes";
+import { NodeEnvs } from '@src/constants/misc';
+import { RouteError } from '@src/other/classes';
 
 // send mail
-import mjml from "mjml";
-import fs from "fs";
-import { type } from "os";
+import mjml from 'mjml';
 
 // **** Variables **** //
 
@@ -40,7 +38,7 @@ app.use(cookieParser(EnvVars.CookieProps.Secret));
 
 // Show routes called in console during development
 if (EnvVars.NodeEnv === NodeEnvs.Dev) {
-  app.use(morgan("dev"));
+  app.use(morgan('dev'));
 }
 
 // Security
@@ -58,7 +56,7 @@ app.use(
     _: Request,
     res: Response,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    next: NextFunction
+    next: NextFunction,
   ) => {
     if (EnvVars.NodeEnv !== NodeEnvs.Test) {
       logger.err(err, true);
@@ -68,25 +66,25 @@ app.use(
       status = err.status;
     }
     return res.status(status).json({ error: err.message });
-  }
+  },
 );
 
 // ** Front-End Content ** //
 
 // Set views directory (html)
-const viewsDir = path.join(__dirname, "views");
-app.set("views", viewsDir);
+const viewsDir = path.join(__dirname, 'views');
+app.set('views', viewsDir);
 
 // Set static directory (js and css).
-const staticDir = path.join(__dirname, "public");
+const staticDir = path.join(__dirname, 'public');
 app.use(express.static(staticDir));
 
 // Nav to users pg by default
-app.get("/", (_: Request, res: Response) => {
-  return res.redirect("/email");
+app.get('/', (_: Request, res: Response) => {
+  return res.redirect('/email');
 });
 
-app.get("/email", (req, res) => {
+app.get('/email', (req, res) => {
   const mjmlString = `
   <mjml>
     <mj-body background-color="#F4F4F4" color="#55575d" font-family="Arial, sans-serif">
@@ -180,8 +178,8 @@ app.get("/email", (req, res) => {
 });
 
 // Redirect to login if not logged in.
-app.get("/users", (_: Request, res: Response) => {
-  return res.sendFile("users.html", { root: viewsDir });
+app.get('/users', (_: Request, res: Response) => {
+  return res.sendFile('users.html', { root: viewsDir });
 });
 
 // **** Export default **** //
